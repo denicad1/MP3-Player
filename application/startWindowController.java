@@ -1,13 +1,16 @@
 package application;
 
-import java.awt.event.MouseEvent;
+import javafx.scene.input.MouseEvent;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -55,14 +58,49 @@ public class startWindowController implements Initializable {
 	 * maybe put a forward and backward button. maybe need to put that on further
 	 * windows. starting window might need nothing.
 	 */
-	private void listChoice(MouseEvent click) {
+
+	public void listChoice(MouseEvent click) {
+		Parent root;
+		FXMLLoader fxmlLoader;
+		Stage stage;
+		String selection = startMenu.getSelectionModel().getSelectedItem();
+		if (selection.equals("All Songs")) {
+			try {
+				fxmlLoader = new FXMLLoader(getClass().getResource("allSongs.fxml"));
+				root = fxmlLoader.load();
+				stage = new Stage();
+				stage.initModality(Modality.APPLICATION_MODAL);
+				stage.initStyle(StageStyle.DECORATED);
+				stage.setTitle("All Songs");
+				stage.setScene(new Scene(root));
+				((Node) (click.getSource())).getScene().getWindow().hide();
+
+				stage.show();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (selection.equals("Playlists")) {
+			try {
+				fxmlLoader = new FXMLLoader(getClass().getResource("createPlaylist.fxml"));
+				root = fxmlLoader.load();
+				stage = new Stage();
+				stage.initModality(Modality.APPLICATION_MODAL);
+				stage.initStyle(StageStyle.DECORATED);
+				stage.setTitle("Playlists");
+				stage.setScene(new Scene(root));
+				((Node) (click.getSource())).getScene().getWindow().hide();
+				stage.show();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		/*
 		 * figure out a way to make it so that you can click an item in the menu and it
 		 * will select it and go to the next window. or try to make it so it will set
 		 * the stage with a new scene that way it isn't a bunch of windows
 		 **/
-		System.out.println(startMenu.getSelectionModel().getSelectedItem());
 
 	}
-
 }

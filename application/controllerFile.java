@@ -6,6 +6,9 @@ package application;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -16,6 +19,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -47,33 +51,28 @@ public class controllerFile implements Initializable {
 	private Button playlist;
 	@FXML
 	private Button play;
+
 	@FXML
-	private ListView<String> startMenu = new ListView<>();
-	@FXML
-	private ObservableList<String> items;
+	private ListView<Object> playlists;
+	private ObservableList<Object> items;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
+		items = FXCollections.observableArrayList("hey", "hello", "derp");
+		playlists.setItems(items);
 	}
 
-	public void createPlaylistWindow(Event event) {
-		Parent root;
-		FXMLLoader fxmlLoader;
-		Stage stage;
-		try {
-			fxmlLoader = new FXMLLoader(getClass().getResource("createPlaylist.fxml"));
-			root = fxmlLoader.load();
-			stage = new Stage();
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.initStyle(StageStyle.DECORATED);
-			stage.setTitle("Create Playlist");
-			stage.setScene(new Scene(root));
-			((Node) (event.getSource())).getScene().getWindow().hide();
-			stage.show();
+	/**
+	 * keep working on creating playlists, then shuffle. might need to create a new
+	 * window to actually create the playlist versus display it
+	 */
 
-		} catch (Exception e) {
-		}
+	public void createPlaylist(Event event) {
+
+		ArrayList<Object> newPlaylist = new ArrayList<>();
+		newPlaylist.add("well");
+
 	}
 
 	public void playSong(ActionEvent event) {
@@ -82,10 +81,8 @@ public class controllerFile implements Initializable {
 		DocumentBuilder dBuilder;
 		NodeList nList = null;
 		/**
-		 * it is reading the path of the file to play the song. need to fill xml file
-		 * and media package so it can play everything. still need to create way to make
-		 * playlist, shuffle songs, finish making guis,and fill xml file to contain the
-		 * info about each song and create all the starting window option
+		 * still need to create way to make playlist, shuffle songs, finish making
+		 * guis,and create all the starting window option
 		 */
 		try {
 			dBuilder = dbFactory.newDocumentBuilder();
@@ -106,8 +103,7 @@ public class controllerFile implements Initializable {
 		me = new Media(new File(path).toURI().toString());
 		mp = new MediaPlayer(me);
 		mp.play();
-		/** below is pause function for media player */
-		// mp.pause;
+
 	}
 
 }

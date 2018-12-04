@@ -8,6 +8,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -25,7 +27,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/application/window.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/application/startWindow.fxml"));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
@@ -59,7 +61,19 @@ public class Main extends Application {
 			doc.getDocumentElement().normalize();
 			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 			NodeList nList = doc.getElementsByTagName("song");
-			System.out.println(nList.item(0).getTextContent());
+			for (int i = 0; i < nList.getLength(); i++) {
+				Node thing = nList.item(i);
+				// System.out.println(thing.getNodeName());
+				if (thing.getNodeType() == Node.ELEMENT_NODE) {
+					Element stuff = (Element) thing;
+					System.out.println(stuff.getElementsByTagName("path").item(0).getTextContent());
+					System.out.println(stuff.getElementsByTagName("genre").item(0).getTextContent());
+					System.out.println(stuff.getElementsByTagName("artist").item(0).getTextContent());
+					System.out.println(stuff.getElementsByTagName("album").item(0).getTextContent());
+
+				}
+			}
+
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
